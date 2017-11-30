@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{C91641
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help", "Help", "{399CEA4F-4DF7-46DA-8899-B3E60F8CE6D2}"
 	ProjectSection(SolutionItems) = preProject
-		..\challenge\sea_battle.md = ..\challenge\sea_battle.md
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Global
