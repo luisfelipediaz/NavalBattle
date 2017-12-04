@@ -3,15 +3,13 @@ namespace Codifico.Senior.Core.Entities
 {
     public class Player
     {
-        public string Id
-        {
-            get;
-            set;
-        }
+        public string Id { get; }
 
-        public Boat[] Boats
+        public Boat[] Boats { get; }
+
+        public Player(string Id)
         {
-            get;
+            this.Id = Id;
         }
 
         public override bool Equals(object obj)
