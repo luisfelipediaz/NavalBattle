@@ -9,7 +9,7 @@ namespace Codifico.Senior.Web.Hubs
 {
     public class NavalBattleHub : Hub
     {
-        public static NavalBattleGames games = new NavalBattleGames();
+        public static GamesRoom games = new GamesRoom();
 
         public Task Send(string data)
         {
