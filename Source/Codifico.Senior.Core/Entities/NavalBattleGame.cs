@@ -3,11 +3,18 @@ namespace Codifico.Senior.Core.Entities
 {
     public class NavalBattleGame
     {
+        public string Id { get; }
+
         public Player Player1 { get; set; }
 
         public Player Player2 { get; set; }
 
         public Player Winner { get; set; }
+
+        public NavalBattleGame()
+        {
+            Id = $"NavalBattle{DateTime.Now.Ticks}";
+        }
 
         public Player GetPlayer(string player)
         {
