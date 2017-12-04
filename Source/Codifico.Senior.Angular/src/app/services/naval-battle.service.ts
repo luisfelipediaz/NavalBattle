@@ -30,7 +30,7 @@ export class NavalBattleService {
       this.movesOfRival.next(data);
     });
 
-    this.hubConnection.on('onAssignGroup', (groupName: string) => {
+    this.hubConnection.on('onAssignGame', (groupName: string) => {
       alert(groupName);
     });
   }
