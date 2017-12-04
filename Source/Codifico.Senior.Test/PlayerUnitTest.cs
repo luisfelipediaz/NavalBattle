@@ -8,24 +8,18 @@ namespace Codifico.Senior.Test
     public class PlayerUnitTest
     {
         [TestMethod]
-        public void ShouldReturnTrueWhenSendPlayer1String()
+        public void ShouldEqualsReturnTrueWhenSendPlayer1String()
         {
-            Player player = new Player()
-            {
-                Id = "Player1"
-            };
+            Player player = new Player("Player1");
 
             Boolean actual = player.Equals("Player1");
             Assert.IsTrue(actual);
         }
 
         [TestMethod]
-        public void ShouldReturnFalseWhenSendPlayer2String()
+        public void ShouldEqualsReturnFalseWhenSendPlayer2String()
         {
-            Player player = new Player()
-            {
-                Id = "Player1"
-            };
+            Player player = new Player("Player1");
 
             Boolean actual = player.Equals("Player2");
             Assert.IsFalse(actual);
