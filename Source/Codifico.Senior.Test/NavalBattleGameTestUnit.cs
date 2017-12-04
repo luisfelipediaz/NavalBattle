@@ -7,13 +7,20 @@ namespace Codifico.Senior.Test
     public class NavalBattleGameTestUnit
     {
         [TestMethod]
+        public void ShouldCreateNewGuidInConstructor()
+        {
+            NavalBattleGame game = new NavalBattleGame();
+            Assert.IsFalse(game.Id is null);
+        }
+
+        [TestMethod]
         public void ShouldReturnThePlayer1WhenSendPlayerAny()
         {
-            Player expected = new Player() { Id = "PlayerAny" };
+            Player expected = new Player("PlayerAny");
             NavalBattleGame game = new NavalBattleGame
             {
-                Player1 = new Player() { Id = "PlayerAny" },
-                Player2 = new Player() { Id = "Player1" }
+                Player1 = new Player("PlayerAny"),
+                Player2 = new Player("Player1")
             };
 
             Player actualPlayer = game.GetPlayer("PlayerAny");
@@ -24,11 +31,11 @@ namespace Codifico.Senior.Test
         [TestMethod]
         public void ShouldReturnThePlayer2WhenSendPlayerAny()
         {
-            Player expected = new Player() { Id = "PlayerAny" };
+            Player expected = new Player("PlayerAny");
             NavalBattleGame game = new NavalBattleGame
             {
-                Player1 = new Player() { Id = "Player1" },
-                Player2 = new Player() { Id = "PlayerAny" }
+                Player1 = new Player("Player1"),
+                Player2 = new Player("PlayerAny")
             };
 
             Player actualPlayer = game.GetPlayer("PlayerAny");
@@ -42,8 +49,8 @@ namespace Codifico.Senior.Test
         {
             NavalBattleGame game = new NavalBattleGame
             {
-                Player1 = new Player() { Id = "Player1" },
-                Player2 = new Player() { Id = "PlayerAny" }
+                Player1 = new Player("Player1"),
+                Player2 = new Player("PlayerAny")
             };
             game.GetPlayer("PlayerError");
         }
