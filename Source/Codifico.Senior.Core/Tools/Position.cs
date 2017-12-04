@@ -7,12 +7,12 @@ namespace Codifico.Senior.Core.Tools
 {
     public static class Position
     {
-        public static Dictionary<Point, Boolean> InitPointsNotMarked(Point pointInitial, Point pointFinal)
+        public static Dictionary<Point, Boolean> InitPointsNotMarked(Point initialPoint, Point finalPoint)
         {
             Dictionary<Point, Boolean> points = new Dictionary<Point, bool>();
 
-            Point lessPoint = GetLessPoint(ref pointInitial, ref pointFinal);
-            Point higherPoint = GetHigherPoint(pointInitial, pointFinal);
+            Point lessPoint = GetLessPoint(initialPoint, finalPoint);
+            Point higherPoint = GetHigherPoint(initialPoint, finalPoint);
 
             for (int x = lessPoint.X; x <= higherPoint.X; x++)
             {
@@ -33,7 +33,7 @@ namespace Codifico.Senior.Core.Tools
                 return pointFinal;
         }
 
-        private static Point GetLessPoint(ref Point pointInitial, ref Point pointFinal)
+        private static Point GetLessPoint(Point pointInitial, Point pointFinal)
         {
             if (pointInitial.X <= pointFinal.X && pointInitial.Y <= pointFinal.Y)
                 return pointInitial;

@@ -8,14 +8,11 @@ namespace Codifico.Senior.Core.Entities
 {
     public class Boat
     {
-        public int Size { get; }
-
         private Dictionary<Point, Boolean> PointsMarked { get; set; }
 
-        public Boat(Point pointInitial, Point pointFinal)
+        public Boat(Point initialPoint, Point finalPoint)
         {
-            this.PointsMarked = Position.InitPointsNotMarked(pointInitial, pointFinal);
-            Size = this.PointsMarked.Count();
+            this.PointsMarked = Position.InitPointsNotMarked(initialPoint, finalPoint);
         }
 
         public bool HitMarker(Point move)
