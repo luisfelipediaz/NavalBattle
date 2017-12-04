@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Codifico.Senior.Core.Entities;
+using System.Linq;
 
 namespace Codifico.Senior.Test
 {
@@ -50,7 +51,6 @@ namespace Codifico.Senior.Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
         public void ShouldPlayer2MissingReturnTrueWhilePlayer2IsNotDefined()
         {
             NavalBattleGame game = new NavalBattleGame();
@@ -59,8 +59,7 @@ namespace Codifico.Senior.Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
-        public void ShouldPlayer2MissingReturnTrueWhenPlayer2IsDefined()
+        public void ShouldPlayer2MissingReturnFalseWhenPlayer2IsDefined()
         {
             NavalBattleGame game = new NavalBattleGame();
             game.AssignPlayer1(new Player("Player1"));
@@ -84,6 +83,36 @@ namespace Codifico.Senior.Test
             NavalBattleGame game = new NavalBattleGame();
             game.AssignPlayer2(new Player("Player2"));
             game.AssignPlayer2(new Player("PlayerAny"));
+        }
+
+        [TestMethod]
+        public void ShouldCreateTwoBoatsOfTwoSize()
+        {
+            NavalBattleGame game = new NavalBattleGame();
+            game.AssignPlayer1(new Player("Player1"));
+            Player player = game.GetPlayer("Player1");
+            int countOfTwoSize = player.Boats.Count(boat => boat.Size == 2);
+            Assert.AreEqual(2, countOfTwoSize);
+        }
+
+        [TestMethod]
+        public void ShouldCreateOnBoatsOfThreeSize()
+        {
+            NavalBattleGame game = new NavalBattleGame();
+            game.AssignPlayer1(new Player("Player1"));
+            Player player = game.GetPlayer("Player1");
+            int countOfThreeSize = player.Boats.Count(boat => boat.Size == 3);
+            Assert.AreEqual(1, countOfThreeSize);
+        }
+
+        [TestMethod]
+        public void ShouldCreateOnBoatsOfFourSize()
+        {
+            NavalBattleGame game = new NavalBattleGame();
+            game.AssignPlayer1(new Player("Player1"));
+            Player player = game.GetPlayer("Player1");
+            int countOfFourSize = player.Boats.Count(boat => boat.Size == 4);
+            Assert.AreEqual(1, countOfFourSize);
         }
     }
 }

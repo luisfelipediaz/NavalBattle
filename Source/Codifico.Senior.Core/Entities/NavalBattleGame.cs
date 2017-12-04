@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Drawing;
+using Codifico.Senior.Core.Tools;
+
 namespace Codifico.Senior.Core.Entities
 {
     public class NavalBattleGame
@@ -16,19 +19,18 @@ namespace Codifico.Senior.Core.Entities
             Id = $"NavalBattle{DateTime.Now.Ticks}";
         }
 
-        public Player GetPlayer(string player)
+        public Player GetPlayer(string idPlayer)
         {
-            if (Player1.Equals(player))
-            {
-                return Player1;
-            }
+            if (Player1.Equals(idPlayer)) return Player1;
 
-            if (Player2.Equals(player))
-            {
-                return Player2;
-            }
+            if (Player2.Equals(idPlayer)) return Player2;
 
             throw new ArgumentException("Player not exist");
+        }
+
+        public bool ExistIdPlayerInGame(string idPlayer)
+        {
+            return Player1.Equals(idPlayer) || Player2.Equals(idPlayer);
         }
 
         public void AssignPlayer1(Player player)
@@ -53,18 +55,38 @@ namespace Codifico.Senior.Core.Entities
             }
             else
             {
-                throw new System.ArgumentException("The player 1 already exists");
+                throw new System.ArgumentException("The player 2 already exists");
             }
-        }
-
-        private void ProcessPlayerBoats(Player player)
-        {
-            //TODO
         }
 
         public bool Player2Missing()
         {
             return Player2 is null;
+        }
+
+        void ProcessPlayerBoats(Player player)
+        {
+            AddRandomBoat(player, 2);
+            AddRandomBoat(player, 2);
+            AddRandomBoat(player, 3);
+            AddRandomBoat(player, 4);
+        }
+
+        void AddRandomBoat(Player player, int size)
+        {
+            bool overfow = true;
+            bool added = true;
+            do
+            {
+                Point initialPoint = Position.GetRandomPoint(Constants.MAX_X, Constants.MAX_Y);
+                Direction direction = Position.GetRandomDirection();
+                overfow = Position.Overflow(initialPoint, size, direction);
+                if (overfow is false)
+                {
+                    Boat boatOneOfTwoSize = new Boat(initialPoint, size, direction);
+                    added = player.AddBoat(boatOneOfTwoSize);
+                }
+            } while (overfow || (added is false));
         }
     }
 }

@@ -6,24 +6,24 @@ namespace Codifico.Senior.Core.Entities
 {
     public class GamesRoom
     {
-        private List<NavalBattleGame> _games;
+        List<NavalBattleGame> Games;
 
         public GamesRoom()
         {
-            _games = new List<NavalBattleGame>();
+            Games = new List<NavalBattleGame>();
         }
 
         public NavalBattleGame AddPlayer(string Id)
         {
             Player newPlayer = new Player(Id);
 
-            NavalBattleGame groupAlone = _games.FirstOrDefault(game => game.Player2Missing());
+            NavalBattleGame groupAlone = Games.FirstOrDefault(game => game.Player2Missing());
 
             if (groupAlone is null)
             {
                 groupAlone = new NavalBattleGame();
                 groupAlone.AssignPlayer1(newPlayer);
-                _games.Add(groupAlone);
+                Games.Add(groupAlone);
             }
             else
             {
@@ -31,6 +31,11 @@ namespace Codifico.Senior.Core.Entities
             }
 
             return groupAlone;
+        }
+
+        public NavalBattleGame GetGameOfIdPlayer(string IdPlayer)
+        {
+            return Games.FirstOrDefault(game => game.ExistIdPlayerInGame(IdPlayer));
         }
     }
 }

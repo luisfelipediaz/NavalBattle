@@ -8,26 +8,40 @@ namespace Codifico.Senior.Core.Entities
 {
     public class Boat
     {
-        private Dictionary<Point, Boolean> PointsMarked { get; set; }
+        Dictionary<Point, Boolean> PointsMarked { get; set; }
 
-        public Boat(Point initialPoint, Point finalPoint)
+        public int Size { get; }
+
+        public Boat(Point initialPoint, int size, Direction direction)
         {
-            this.PointsMarked = Position.InitPointsNotMarked(initialPoint, finalPoint);
+            PointsMarked = Position.InitPointsNotMarked(initialPoint, size, direction);
+            Size = PointsMarked.Count;
         }
 
         public bool HitMarker(Point move)
         {
-            bool existPoint = PointsMarked.ContainsKey(move);
+            if (TruncatePoint(move))
+            {
+                PointsMarked[move] = true;
+                return true;
+            }
 
-            if (existPoint is false)
-                return false;
-
-            return (PointsMarked[move] = true);
+            return false;
         }
 
         public bool ItsAlive()
         {
             return PointsMarked.ContainsValue(false);
+        }
+
+        bool TruncatePoint(Point point)
+        {
+            return PointsMarked.ContainsKey(point);
+        }
+
+        public static bool TwoBoatsTruncate(Boat boat1, Boat boat2)
+        {
+            return boat1.PointsMarked.Any(point1 => boat2.TruncatePoint(point1.Key));
         }
     }
 }

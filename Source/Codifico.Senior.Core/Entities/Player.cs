@@ -1,16 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using Codifico.Senior.Core.Tools;
+
 namespace Codifico.Senior.Core.Entities
 {
     public class Player
     {
         public string Id { get; }
 
-        public Boat[] Boats { get; }
+        public List<Boat> Boats { get; }
 
         public Player(string Id)
         {
-            Boats = new Boat[4];
+            Boats = new List<Boat>(Constants.BOATS_PER_PLAYER);
             this.Id = Id;
+        }
+
+        public bool AddBoat(Boat newBoat)
+        {
+            if (AnyBoatTruncateWithNew(newBoat))
+                return false;
+
+            Boats.Add(newBoat);
+            return true;
+        }
+
+        bool AnyBoatTruncateWithNew(Boat newBoat)
+        {
+            return Boats.Any(baot => Boat.TwoBoatsTruncate(baot, newBoat));
         }
 
         public override bool Equals(object obj)
