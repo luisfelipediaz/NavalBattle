@@ -9,6 +9,7 @@ namespace Codifico.Senior.Core.Entities
 
         public Player(string Id)
         {
+            Boats = new Boat[4];
             this.Id = Id;
         }
 
