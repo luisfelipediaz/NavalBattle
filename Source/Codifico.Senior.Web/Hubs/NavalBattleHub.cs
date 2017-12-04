@@ -9,7 +9,7 @@ namespace Codifico.Senior.Web.Hubs
 {
     public class NavalBattleHub : Hub
     {
-        public static List<NavalBattleGame> games = new List<NavalBattleGame>();
+        public static NavalBattleGames games = new NavalBattleGames();
 
         public Task Send(string data)
         {
@@ -18,20 +18,9 @@ namespace Codifico.Senior.Web.Hubs
 
         public override Task OnConnectedAsync()
         {
-            NavalBattleGame groupAlone = games.FirstOrDefault(game => game.Player2 is null);
-
-            if (groupAlone.Player1 is null)
-            {
-                groupAlone.Player1 = new Player { Id = Context.ConnectionId };
-                games.Add(groupAlone);
-            }
-            else
-            {
-                groupAlone.Player2 = new Player { Id = Context.ConnectionId };
-            }
-
-            Clients.Client(Context.ConnectionId).InvokeAsync("onAssignGroup", groupAlone.GetHashCode());
-
+            NavalBattleGame game = games.AddPlayer(Context.ConnectionId);
+            Clients.Client(Context.ConnectionId).InvokeAsync("onAssignGame", game.Id);
+            Groups.AddAsync(Context.ConnectionId, game.Id);
             return base.OnConnectedAsync();
         }
     }
