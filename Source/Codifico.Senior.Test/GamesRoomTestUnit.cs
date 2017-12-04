@@ -5,12 +5,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Codifico.Senior.Test
 {
     [TestClass]
-    public class NavalBattleGamesTestUnit
+    public class GamesRoomTestUnit
     {
         [TestMethod]
         public void ShouldReturnNavalBattleGameOnAddPlayerOneAndTwo()
         {
-            NavalBattleGames games = new NavalBattleGames();
+            GamesRoom games = new GamesRoom();
             NavalBattleGame gamePlayer1 = games.AddPlayer("player1");
             NavalBattleGame gamePlayer2 = games.AddPlayer("player2");
 
@@ -23,7 +23,7 @@ namespace Codifico.Senior.Test
         [TestMethod]
         public void ShouldCreatedNewNavaBattleOfExistsTheyAreFull()
         {
-            NavalBattleGames games = new NavalBattleGames();
+            GamesRoom games = new GamesRoom();
             games.AddPlayer("player1");
             NavalBattleGame gamePlayer2 = games.AddPlayer("player2");
             NavalBattleGame gamePlayer3 = games.AddPlayer("player3");
