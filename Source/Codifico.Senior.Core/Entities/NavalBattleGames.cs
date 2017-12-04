@@ -6,20 +6,28 @@ namespace Codifico.Senior.Core.Entities
 {
     public class NavalBattleGames
     {
-        public List<NavalBattleGame> Games { get; set; }
+        private List<NavalBattleGame> _games;
+
+        public NavalBattleGames()
+        {
+            _games = new List<NavalBattleGame>();
+        }
 
         public NavalBattleGame AddPlayer(string Id)
         {
-            NavalBattleGame groupAlone = Games.FirstOrDefault(game => game.Player2 is null);
+            Player newPlayer = new Player(Id);
 
-            if (groupAlone.Player1 is null)
+            NavalBattleGame groupAlone = _games.FirstOrDefault(game => game.Player2 is null);
+
+            if (groupAlone is null)
             {
-                groupAlone.Player1 = new Player { Id = Id };
-                Games.Add(groupAlone);
+                groupAlone = new NavalBattleGame();
+                groupAlone.Player1 = newPlayer;
+                _games.Add(groupAlone);
             }
             else
             {
-                groupAlone.Player2 = new Player { Id = Id };
+                groupAlone.Player2 = newPlayer;
             }
 
             return groupAlone;
