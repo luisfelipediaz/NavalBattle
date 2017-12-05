@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  urlNavalSignalR: 'http://localhost:5000/navalBattle'
 };
