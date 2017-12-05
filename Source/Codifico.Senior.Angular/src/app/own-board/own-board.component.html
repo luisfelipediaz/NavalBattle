@@ -1,0 +1,8 @@
+<table *ngIf="game" border="1">
+  <tr *ngFor="let numY of counter(game.sizeInY)">
+    <td *ngFor="let num of counter(game.sizeInX)" [ngStyle]="{'width': ((100/game.sizeInX) + '%')}">
+      <div class="content">
+      </div>
+    </td>
+  </tr>
+</table>
