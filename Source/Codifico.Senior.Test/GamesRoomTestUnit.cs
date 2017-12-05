@@ -34,7 +34,6 @@ namespace Codifico.Senior.Test
         public void ShouldGetGameOfIdPlayerReturnNullWhenNoExistPlayerInGames()
         {
             GamesRoom games = new GamesRoom();
-            //games.AddPlayer("player1");
 
             NavalBattleGame gameOfPlayer1 = games.GetGameOfIdPlayer("player1");
 
