@@ -8,7 +8,7 @@ namespace Codifico.Senior.Core.Entities
 {
     public class Boat
     {
-        Dictionary<Point, Boolean> PointsMarked { get; set; }
+        public Dictionary<Point, Boolean> PointsMarked { get; set; }
 
         public int Size { get; }
 
