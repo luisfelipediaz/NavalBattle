@@ -7,16 +7,18 @@ namespace Codifico.Senior.Core.Entities
     public class NavalBattleGame
     {
         public string Id { get; }
-
-        Player Player1 { get; set; }
-
-        Player Player2 { get; set; }
-
+        public int SizeInX { get; }
+        public int SizeInY { get; }
         public Player Winner { get; set; }
 
+        Player Player1 { get; set; }
+        Player Player2 { get; set; }
+        
         public NavalBattleGame()
         {
             Id = $"NavalBattle{DateTime.Now.Ticks}";
+            SizeInX = Constants.MAX_X + 1;
+            SizeInY = Constants.MAX_Y + 1;
         }
 
         public Player GetPlayer(string idPlayer)
