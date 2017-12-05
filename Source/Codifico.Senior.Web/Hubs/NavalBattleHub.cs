@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using System.Linq;
 using Codifico.Senior.Core.Entities;
+using Codifico.Senior.Core;
 
 namespace Codifico.Senior.Web.Hubs
 {
@@ -19,8 +20,7 @@ namespace Codifico.Senior.Web.Hubs
         public override Task OnConnectedAsync()
         {
             NavalBattleGame game = games.AddPlayer(Context.ConnectionId);
-            Clients.Client(Context.ConnectionId).InvokeAsync("onAssignGame", game.Id);
-            Groups.AddAsync(Context.ConnectionId, game.Id);
+            Clients.Client(Context.ConnectionId).InvokeAsync("onAssignGame", game);
             return base.OnConnectedAsync();
         }
     }
