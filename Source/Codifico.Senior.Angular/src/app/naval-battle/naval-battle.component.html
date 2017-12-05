@@ -1,14 +1,8 @@
 <div class="container-fluid">
-
-  <h1>Send some basic messages</h1>
-
-  <div class="row">
-    <form class="form-inline" (ngSubmit)="sendMessage()" #messageForm="ngForm">
-      <div class="form-group">
-        <label class="sr-only" for="message">Message</label>
-        <input type="text" class="form-control" id="message" placeholder="your message..." name="message" [(ngModel)]="message" required>
-      </div>
-      <button type="submit" class="btn btn-primary" [disabled]="!messageForm.valid">Send SignalR Message</button>
-    </form>
+  <div *ngIf="gameObservable | async as game; else loading" class="row">
+    <app-own-board [game]="game" class="col-sm-4">
+    </app-own-board>
   </div>
+  <ng-template #loading>Buscando juego</ng-template>
+
 </div>

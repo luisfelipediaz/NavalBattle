@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HubConnection } from '@aspnet/signalr-client';
 import { NavalBattleService } from '../services/naval-battle.service';
+import { Observable } from 'rxjs/Observable';
+import { NavalBattleGame } from '../app.model';
 
 @Component({
   selector: 'app-naval-battle',
@@ -8,18 +10,12 @@ import { NavalBattleService } from '../services/naval-battle.service';
 })
 export class NavalBattleComponent implements OnInit {
 
-  message: string;
+  gameObservable: Observable<NavalBattleGame>;
 
   constructor(public navalBattleService: NavalBattleService) { }
 
   ngOnInit() {
-    this.navalBattleService.onMoveRival().subscribe((data) => {
-      alert(data);
-    });
-  }
-
-  public sendMessage(): void {
-    this.navalBattleService.sendMove(this.message);
+    this.gameObservable = this.navalBattleService.initGame();
   }
 
 }
