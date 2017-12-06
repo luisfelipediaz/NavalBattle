@@ -44,8 +44,6 @@ describe('OwnBoardComponent', () => {
     delete component.game;
     fixture.detectChanges();
 
-    const compile = fixture.debugElement.nativeElement;
-
     expect(compile.querySelector('table')).toBeFalsy();
   });
 
@@ -53,13 +51,15 @@ describe('OwnBoardComponent', () => {
     expect(compile.querySelector('table')).toBeTruthy();
   });
 
-  it('should bind table with 8 rows, configured in input "game"', () => {
-    expect(compile.querySelectorAll('table tr').length).toEqual(game.sizeInY);
+  it('should bind table with 9 rows, configured in input "game"', () => {
+    expect(compile.querySelectorAll('table tr').length).toEqual(game.sizeInY + 1);
   });
 
-  it('should bind table with 8 tds per row, configured in input "game"', () => {
-    expect(compile.querySelector('table tr').querySelectorAll('td').length).toEqual(game.sizeInY);
+  it('should bind table with 9 tds per row, configured in input "game"', () => {
+    expect(compile.querySelector('table tr').querySelectorAll('td').length).toEqual(game.sizeInY + 1);
   });
 
-  it('should call " "')
+  it('should assign class ".boat-cell" to the cells that belong to the array input of the boats', () => {
+    const boats: Boat[] = [];
+  });
 });

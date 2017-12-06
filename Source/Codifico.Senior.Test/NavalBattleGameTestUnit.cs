@@ -19,8 +19,8 @@ namespace Codifico.Senior.Test
         {
             Player expected = new Player("PlayerAny");
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("PlayerAny"));
-            game.AssignPlayer2(new Player("Player1"));
+            game.AddPlayer(new Player("PlayerAny"));
+            game.AddPlayer(new Player("Player1"));
 
             Player actualPlayer = game.GetPlayer("PlayerAny");
 
@@ -32,8 +32,8 @@ namespace Codifico.Senior.Test
         {
             Player expected = new Player("PlayerAny");
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("Player1"));
-            game.AssignPlayer2(new Player("PlayerAny"));
+            game.AddPlayer(new Player("Player1"));
+            game.AddPlayer(new Player("PlayerAny"));
 
             Player actualPlayer = game.GetPlayer("PlayerAny");
 
@@ -45,8 +45,8 @@ namespace Codifico.Senior.Test
         public void ShouldThrowExceptionWhenSendPlayerError()
         {
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("Player1"));
-            game.AssignPlayer2(new Player("PlayerAny"));
+            game.AddPlayer(new Player("Player1"));
+            game.AddPlayer(new Player("PlayerAny"));
             game.GetPlayer("PlayerError");
         }
 
@@ -54,42 +54,34 @@ namespace Codifico.Senior.Test
         public void ShouldPlayer2MissingReturnTrueWhilePlayer2IsNotDefined()
         {
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("Player1"));
-            Assert.IsTrue(game.Player2Missing());
+            game.AddPlayer(new Player("Player1"));
+            Assert.IsTrue(game.GameIsIncomplete());
         }
 
         [TestMethod]
         public void ShouldPlayer2MissingReturnFalseWhenPlayer2IsDefined()
         {
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("Player1"));
-            game.AssignPlayer2(new Player("Player2"));
-            Assert.IsFalse(game.Player2Missing());
+            game.AddPlayer(new Player("Player1"));
+            game.AddPlayer(new Player("Player2"));
+            Assert.IsFalse(game.GameIsIncomplete());
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
-        public void ShouldNotPermiteOverridePlayer1()
+        [ExpectedException(typeof(System.RankException))]
+        public void ShouldNotPermiteAddMoreOfTwoPlayers()
         {
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("Player1"));
-            game.AssignPlayer1(new Player("PlayerAny"));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.ArgumentException))]
-        public void ShouldNotPermiteOverridePlayer2()
-        {
-            NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer2(new Player("Player2"));
-            game.AssignPlayer2(new Player("PlayerAny"));
+            game.AddPlayer(new Player("Player1"));
+            game.AddPlayer(new Player("Player2"));
+            game.AddPlayer(new Player("PlayerAny"));
         }
 
         [TestMethod]
         public void ShouldCreateTwoBoatsOfTwoSize()
         {
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("Player1"));
+            game.AddPlayer(new Player("Player1"));
             Player player = game.GetPlayer("Player1");
             int countOfTwoSize = player.Boats.Count(boat => boat.Size == 2);
             Assert.AreEqual(2, countOfTwoSize);
@@ -99,7 +91,7 @@ namespace Codifico.Senior.Test
         public void ShouldCreateOnBoatsOfThreeSize()
         {
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("Player1"));
+            game.AddPlayer(new Player("Player1"));
             Player player = game.GetPlayer("Player1");
             int countOfThreeSize = player.Boats.Count(boat => boat.Size == 3);
             Assert.AreEqual(1, countOfThreeSize);
@@ -109,7 +101,7 @@ namespace Codifico.Senior.Test
         public void ShouldCreateOnBoatsOfFourSize()
         {
             NavalBattleGame game = new NavalBattleGame();
-            game.AssignPlayer1(new Player("Player1"));
+            game.AddPlayer(new Player("Player1"));
             Player player = game.GetPlayer("Player1");
             int countOfFourSize = player.Boats.Count(boat => boat.Size == 4);
             Assert.AreEqual(1, countOfFourSize);

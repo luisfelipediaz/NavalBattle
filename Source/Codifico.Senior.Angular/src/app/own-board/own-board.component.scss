@@ -1,13 +1,4 @@
-td .content {
-    transition: 0.3s all;
+td .game-space {
     background: blue;
     opacity: 0.3;
-    cursor: pointer;
-}
-
-td .content:hover{
-    transition: 0.3s all;
-    opacity: 1;
-    background: lightblue;
-    border: solid 1px blue;
 }

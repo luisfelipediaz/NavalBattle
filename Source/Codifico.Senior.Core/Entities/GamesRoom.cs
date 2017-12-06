@@ -17,18 +17,15 @@ namespace Codifico.Senior.Core.Entities
         {
             Player newPlayer = new Player(Id);
 
-            NavalBattleGame groupAlone = Games.FirstOrDefault(game => game.Player2Missing());
+            NavalBattleGame groupAlone = Games.FirstOrDefault(game => game.GameIsIncomplete());
 
             if (groupAlone is null)
             {
                 groupAlone = new NavalBattleGame();
-                groupAlone.AssignPlayer1(newPlayer);
                 Games.Add(groupAlone);
             }
-            else
-            {
-                groupAlone.AssignPlayer2(newPlayer);
-            }
+
+            groupAlone.AddPlayer(newPlayer);
 
             return groupAlone;
         }

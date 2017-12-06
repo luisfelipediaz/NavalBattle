@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using Codifico.Senior.Core.Tools;
+using System.Linq;
 
 namespace Codifico.Senior.Core.Entities
 {
@@ -10,60 +11,46 @@ namespace Codifico.Senior.Core.Entities
         public int SizeInX { get; }
         public int SizeInY { get; }
         public Player Winner { get; set; }
+        public Player[] Players { get; set; }
 
-        Player Player1 { get; set; }
-        Player Player2 { get; set; }
-        
         public NavalBattleGame()
         {
             Id = $"NavalBattle{DateTime.Now.Ticks}";
             SizeInX = Constants.MAX_X + 1;
             SizeInY = Constants.MAX_Y + 1;
+            Players = new Player[2];
         }
 
         public Player GetPlayer(string idPlayer)
         {
-            if (Player1.Equals(idPlayer)) return Player1;
+            Player playerFound = Players.FirstOrDefault(player => player?.Id == idPlayer);
 
-            if (Player2.Equals(idPlayer)) return Player2;
+            if (playerFound is null)
+                throw new ArgumentException("Player not exist");
 
-            throw new ArgumentException("Player not exist");
+            return playerFound;
         }
 
         public bool ExistIdPlayerInGame(string idPlayer)
         {
-            return Player1.Equals(idPlayer) || Player2.Equals(idPlayer);
+            return Players.Any(player => player?.Id == idPlayer);
         }
 
-        public void AssignPlayer1(Player player)
+        public void AddPlayer(Player player)
         {
-            if (Player1 is null)
-            {
-                Player1 = player;
-                ProcessPlayerBoats(Player1);
-            }
+            if (Players[0] is null)
+                Players[0] = player;
+            else if (Players[1] is null)
+                Players[1] = player;
             else
-            {
-                throw new System.ArgumentException("The player 1 already exists");
-            }
+                throw new RankException("This game is full");
+
+            ProcessPlayerBoats(player);
         }
 
-        public void AssignPlayer2(Player player)
+        public bool GameIsIncomplete()
         {
-            if (Player2 is null)
-            {
-                Player2 = player;
-                ProcessPlayerBoats(Player2);
-            }
-            else
-            {
-                throw new System.ArgumentException("The player 2 already exists");
-            }
-        }
-
-        public bool Player2Missing()
-        {
-            return Player2 is null;
+            return Players.Any(player => player is null);
         }
 
         void ProcessPlayerBoats(Player player)

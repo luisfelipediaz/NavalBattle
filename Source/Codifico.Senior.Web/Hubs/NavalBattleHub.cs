@@ -17,6 +17,11 @@ namespace Codifico.Senior.Web.Hubs
             return Clients.All.InvokeAsync("Send", data);
         }
 
+        public List<Boat> GetBoatsOfPlayer()
+        {
+            return games.GetGameOfIdPlayer(Context.ConnectionId).GetPlayer(Context.ConnectionId).Boats;
+        }
+
         public override Task OnConnectedAsync()
         {
             NavalBattleGame game = games.AddPlayer(Context.ConnectionId);
