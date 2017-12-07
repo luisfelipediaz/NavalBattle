@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OwnBoardComponent } from './own-board.component';
-import { NavalBattleGame } from '../app.model';
+import { NavalBattleGame, Boat } from '../app.model';
+import { NavalBattleService } from '../services/naval-battle.service';
 
 describe('OwnBoardComponent', () => {
   let component: OwnBoardComponent;
@@ -11,7 +12,8 @@ describe('OwnBoardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OwnBoardComponent]
+      declarations: [OwnBoardComponent],
+      providers: [NavalBattleService]
     })
       .compileComponents();
   }));
@@ -19,6 +21,11 @@ describe('OwnBoardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OwnBoardComponent);
     component = fixture.componentInstance;
+
+    const navalBattleService: NavalBattleService = fixture.debugElement.injector.get(NavalBattleService);
+
+    spyOn(navalBattleService, 'getBoatsOfPlayer');
+
     fixture.detectChanges();
   });
 
@@ -57,6 +64,19 @@ describe('OwnBoardComponent', () => {
 
   it('should bind table with 9 tds per row, configured in input "game"', () => {
     expect(compile.querySelector('table tr').querySelectorAll('td').length).toEqual(game.sizeInY + 1);
+  });
+
+  it('should "counter" return a new array of 9 length', () => {
+    const actual: any[] = component.counter(9)
+
+    expect(actual.length).toBe(9);
+  });
+
+  it('should "getArrayLettersTo" return a new array of first 4 letters', () => {
+    const expected: string[] = ['A','B','C','D'];
+    const actual: string[] = component.getArrayLettersTo(4)
+
+    expect(actual).toEqual(expected);
   });
 
   it('should assign class ".boat-cell" to the cells that belong to the array input of the boats', () => {
