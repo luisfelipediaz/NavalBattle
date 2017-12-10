@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  urlNavalSignalR: 'http://192.168.0.7/NavalBattle/navalBattle'
+  urlNavalSignalR: 'http://localhost:5000/navalBattle'
 };

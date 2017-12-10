@@ -28,19 +28,7 @@ export class OwnBoardComponent implements OnChanges {
       });
     }
   }
-
-  public counter(count: number): any[] {
-    const arr: number[] = [];
-    for (let i = count - 1; i >= 0; i--) {
-      arr.push(i);
-    }
-    return arr;
-  }
-
-  public getArrayLettersTo(countTo: number): string[] {
-    return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.substring(0, countTo).split('');
-  }
-
+  
   isHitABoat(x: number, y: number): boolean {
     return this.moves.some((move: { x: number, y: number }) => {
       return move.x === x && move.y === y;

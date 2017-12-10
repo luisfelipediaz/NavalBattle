@@ -8,6 +8,7 @@ import { NavalBattleComponent } from './naval-battle/naval-battle.component';
 import { NavalBattleService } from './services/naval-battle.service';
 import { OpposingBoardComponent } from './opposing-board/opposing-board.component';
 import { OwnBoardComponent } from './own-board/own-board.component';
+import { BoardComponent } from './board/board.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { OwnBoardComponent } from './own-board/own-board.component';
     AppComponent,
     NavalBattleComponent,
     OpposingBoardComponent,
-    OwnBoardComponent
+    OwnBoardComponent,
+    BoardComponent
   ],
   imports: [
     BrowserModule,

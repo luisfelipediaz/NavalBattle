@@ -1,24 +1,24 @@
-td.game-space {
+:host ::ng-deep table td div.game-space {
     transition: 0.3s all;
     background: blue;
     opacity: 0.3;
 }
 
-td.game-space.my-turn{
+:host ::ng-deep table td div.game-space.my-turn{
     cursor: pointer;
 }
 
-td.game-space.my-turn:hover{
+:host ::ng-deep table td div.game-space.my-turn:hover{
     transition: 0.3s all;
     opacity: 1;
     background: lightblue;
     border: solid 1px blue;
 }
 
-td.hit-cell {
+:host ::ng-deep table td div.hit-cell {
     background: red;
 }
 
-td.not-hit-cell {
+:host ::ng-deep table td div.not-hit-cell {
     background: white;
 }

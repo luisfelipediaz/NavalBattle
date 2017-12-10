@@ -48,13 +48,6 @@ describe('OwnBoardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should not render table while game is not defined', () => {
-    delete component.game;
-    fixture.detectChanges();
-
-    expect(compile.querySelector('table')).toBeFalsy();
-  });
-
   it('should bind a table', () => {
     expect(compile.querySelector('table')).toBeTruthy();
   });

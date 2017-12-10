@@ -36,18 +36,6 @@ export class OpposingBoardComponent implements OnInit {
     return this.myMoves.some((move: PointInBoat) => move.x === x && move.y === y && !move.beaten);
   }
 
-  public counter(count: number): any[] {
-    const arr: number[] = [];
-    for (let i = count - 1; i >= 0; i--) {
-      arr.push(i);
-    }
-    return arr;
-  }
-
-  public getArrayLettersTo(countTo: number): string[] {
-    return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.substring(0, countTo).split('');
-  }
-
   public sendMove(indexX: number, indexY: number): void {
     this.navalBattleService.sendMove(indexX, indexY);
   }

@@ -1,28 +1,29 @@
 $border-cell-boat: 2px solid purple;
 
-td.game-space {
+
+:host ::ng-deep table td div.game-space {
     background: blue;
     opacity: 0.3;
 }
 
-td.boat-cell {
+:host ::ng-deep table td div.boat-cell {
     background: green;
 }
 
-td.boat-cell.hit-cell {
+:host ::ng-deep table td div.boat-cell.hit-cell {
     background: red;
 }
 
-td.boat-cell-east-west {
+:host ::ng-deep table td div.boat-cell-east-west {
     border-top: $border-cell-boat;
     border-bottom: $border-cell-boat;
 }
 
-td.boat-cell-north-south {
+:host ::ng-deep table td div.boat-cell-north-south {
     border-left: $border-cell-boat;
     border-right: $border-cell-boat;
 }
 
-td.boat-cell-top{
+:host ::ng-deep table td div.boat-cell-top{
     border-top: $border-cell-boat;
 }
