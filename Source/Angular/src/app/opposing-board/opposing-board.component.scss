@@ -14,3 +14,11 @@ td.game-space.my-turn:hover{
     background: lightblue;
     border: solid 1px blue;
 }
+
+td.hit-cell {
+    background: red;
+}
+
+td.not-hit-cell {
+    background: white;
+}

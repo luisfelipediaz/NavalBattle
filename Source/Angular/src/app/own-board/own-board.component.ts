@@ -22,6 +22,10 @@ export class OwnBoardComponent implements OnChanges {
       this.navalBattleService.getBoatsOfPlayer().subscribe(
         (boats: Boat[]) => this.boats = boats
       );
+
+      this.navalBattleService.getOppositeMoves().subscribe((moves: Point[]) => {
+        this.moves = moves;
+      });
     }
   }
 

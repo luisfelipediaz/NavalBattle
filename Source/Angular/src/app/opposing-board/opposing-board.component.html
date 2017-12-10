@@ -8,8 +8,10 @@
     <td *ngFor="let num of counter(game.sizeInX); index as indexX"
       class="game-space"
       [class.my-turn]="myTurn"
+      [class.hit-cell]="isCellBeaten(indexX, indexY)"
+      [class.not-hit-cell]="isNotHitCell(indexX, indexY)"
       [style.width]="((100/(game.sizeInX + 1)) + '%')">
-      <div class="content">
+      <div class="content" (click)="sendMove(indexX, indexY)">
       </div>
     </td>
   </tr>

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { HubConnection } from '@aspnet/signalr-client';
 import { environment } from '../../environments/environment';
-import { NavalBattleGame, Boat } from '../app.model';
+import { NavalBattleGame, Boat, PointInBoat } from '../app.model';
 
 @Injectable()
 export class NavalBattleService {
@@ -11,6 +11,9 @@ export class NavalBattleService {
   private startGame: Subject<NavalBattleGame> = new Subject<NavalBattleGame>();
   private turns: Subject<boolean> = new Subject<boolean>();
   private boatsOfPlayer: Subject<Boat[]> = new Subject<Boat[]>();
+  private myMoves: Subject<PointInBoat[]> = new Subject<PointInBoat[]>();
+  private oppositeMoves: Subject<PointInBoat[]> = new Subject<PointInBoat[]>();
+
   private hubConnection: HubConnection;
 
   constructor() {
@@ -36,6 +39,19 @@ export class NavalBattleService {
     return this.turns;
   }
 
+  public getOppositeMoves(): Observable<PointInBoat[]> {
+    return this.oppositeMoves;
+  }
+
+  public getMyMoves(): Observable<PointInBoat[]> {
+    return this.myMoves;
+  }
+
+  public sendMove(x: number, y: number): void {
+    this.hubConnection.send('SendMove', x, y);
+  }
+
+
   private startSignalR() {
     this.hubConnection.start()
       .then(() => console.log('Hub connection started'))
@@ -58,7 +74,14 @@ export class NavalBattleService {
     this.hubConnection.on('changeTurn', (itsMyTurn: boolean) => {
       this.turns.next(itsMyTurn);
     });
+
+    this.hubConnection.on('onMyMovesChange', (moves: PointInBoat[]) => {
+      this.myMoves.next(moves);
+    });
+
+    this.hubConnection.on('onOppositeMovesChange', (moves: PointInBoat[]) => {
+      this.oppositeMoves.next(moves);
+    });
   }
 
-  
 }

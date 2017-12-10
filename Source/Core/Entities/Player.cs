@@ -12,8 +12,11 @@ namespace Core.Entities
 
         public List<Boat> Boats { get; }
 
+        public List<PointBoat> Moves { get; }
+
         public Player(string Id)
         {
+            Moves = new List<PointBoat>();
             Boats = new List<Boat>(Constants.BOATS_PER_PLAYER);
             this.Id = Id;
         }
@@ -46,6 +49,11 @@ namespace Core.Entities
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public bool HitMarket(Point move)
+        {
+            return Boats.Any(boat => boat.HitMarker(move));
         }
     }
 }

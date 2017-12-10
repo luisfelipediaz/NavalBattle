@@ -32,9 +32,14 @@ namespace Core.Entities
 
         public Player GetPlayer(string IdPlayer)
         {
-            return Games
-                .FirstOrDefault(game => game.ExistIdPlayerInGame(IdPlayer))
+            return GetGameOfPlayer(IdPlayer)
                 .GetPlayer(IdPlayer);
+        }
+
+        public NavalBattleGame GetGameOfPlayer(string IdPlayer)
+        {
+            return Games
+                .FirstOrDefault(game => game.ExistIdPlayerInGame(IdPlayer));
         }
     }
 }
