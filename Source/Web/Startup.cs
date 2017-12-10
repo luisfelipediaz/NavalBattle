@@ -43,6 +43,10 @@ namespace Web
                     });
             });
             services.AddSignalR();
+
+            services.Configure<IISOptions>(config =>
+            {
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

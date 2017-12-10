@@ -83,7 +83,7 @@ namespace Test
             NavalBattleGame game = new NavalBattleGame();
             game.AddPlayer(new Player("Player1"));
             Player player = game.GetPlayer("Player1");
-            int countOfTwoSize = player.Boats.Count(boat => boat.Size == 2);
+            int countOfTwoSize = player.Boats.Count(boat => boat.Points.Count == 2);
             Assert.AreEqual(2, countOfTwoSize);
         }
 
@@ -93,7 +93,7 @@ namespace Test
             NavalBattleGame game = new NavalBattleGame();
             game.AddPlayer(new Player("Player1"));
             Player player = game.GetPlayer("Player1");
-            int countOfThreeSize = player.Boats.Count(boat => boat.Size == 3);
+            int countOfThreeSize = player.Boats.Count(boat => boat.Points.Count == 3);
             Assert.AreEqual(1, countOfThreeSize);
         }
 
@@ -103,7 +103,7 @@ namespace Test
             NavalBattleGame game = new NavalBattleGame();
             game.AddPlayer(new Player("Player1"));
             Player player = game.GetPlayer("Player1");
-            int countOfFourSize = player.Boats.Count(boat => boat.Size == 4);
+            int countOfFourSize = player.Boats.Count(boat => boat.Points.Count == 4);
             Assert.AreEqual(1, countOfFourSize);
         }
     }

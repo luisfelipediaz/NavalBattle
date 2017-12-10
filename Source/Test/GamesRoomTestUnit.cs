@@ -35,7 +35,7 @@ namespace Test
         {
             GamesRoom games = new GamesRoom();
 
-            NavalBattleGame gameOfPlayer1 = games.GetGameOfIdPlayer("player1");
+            Player gameOfPlayer1 = games.GetPlayer("player1");
 
             Assert.IsNull(gameOfPlayer1);
         }
@@ -46,7 +46,7 @@ namespace Test
             GamesRoom games = new GamesRoom();
             games.AddPlayer("player1");
 
-            NavalBattleGame gameOfPlayer1 = games.GetGameOfIdPlayer("player1");
+            Player gameOfPlayer1 = games.GetPlayer("player1");
 
             Assert.IsNotNull(gameOfPlayer1);
         }
