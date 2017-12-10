@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OwnBoardComponent } from './own-board.component';
-import { NavalBattleGame, Boat } from '../app.model';
+import { NavalBattleGame, Boat, Direction } from '../app.model';
 import { NavalBattleService } from '../services/naval-battle.service';
 
 describe('OwnBoardComponent', () => {
   let component: OwnBoardComponent;
   let fixture: ComponentFixture<OwnBoardComponent>;
   let compile;
-  let game: NavalBattleGame
+  let game: NavalBattleGame;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe('OwnBoardComponent', () => {
 
     const navalBattleService: NavalBattleService = fixture.debugElement.injector.get(NavalBattleService);
 
-    spyOn(navalBattleService, 'getBoatsOfPlayer');
+    spyOn(navalBattleService, 'getBoatsOfPlayer').and.callFake(() => null);
 
     fixture.detectChanges();
   });
@@ -33,7 +33,8 @@ describe('OwnBoardComponent', () => {
     game = {
       id: 'fakeGame',
       sizeInX: 8,
-      sizeInY: 8
+      sizeInY: 8,
+      allPlayersOnline: false
     };
 
     component.game = game;
@@ -67,19 +68,66 @@ describe('OwnBoardComponent', () => {
   });
 
   it('should "counter" return a new array of 9 length', () => {
-    const actual: any[] = component.counter(9)
+    const actual: any[] = component.counter(9);
 
     expect(actual.length).toBe(9);
   });
 
   it('should "getArrayLettersTo" return a new array of first 4 letters', () => {
-    const expected: string[] = ['A','B','C','D'];
-    const actual: string[] = component.getArrayLettersTo(4)
+    const expected: string[] = ['A', 'B', 'C', 'D'];
+    const actual: string[] = component.getArrayLettersTo(4);
 
     expect(actual).toEqual(expected);
   });
 
-  it('should assign class ".boat-cell" to the cells that belong to the array input of the boats', () => {
-    const boats: Boat[] = [];
+  it('should "getClassOfCell" return "boat-cell boat-cell-east-west" when pass 2, 4', () => {
+    component.boats = [
+      {
+        id: 'example',
+        die: false,
+        direction: Direction.East,
+        points: [
+          {
+            x: 2,
+            y: 4,
+            beaten: false
+          }
+        ]
+      }
+    ];
+    const actual: string = component.getClassOfCell(2, 4);
+
+    expect(actual).toEqual('boat-cell boat-cell-east-west');
+  });
+
+  it('should "getClassOfCell" return "" when pass 4, 4', () => {
+    component.boats = [];
+
+    const actual: string = component.getClassOfCell(4, 4);
+
+    expect(actual).toEqual('');
+  });
+
+  it('should "isHitABoat" return true when pass 2, 4', () => {
+    component.boats = [
+      {
+        id: 'example',
+        die: false,
+        direction: Direction.East,
+        points: [
+          {
+            x: 2,
+            y: 4,
+            beaten: true
+          }
+        ]
+      }
+    ];
+
+    component.moves = [{ x: 2, y: 4 }];
+
+    const actual = component.isHitABoat(2, 4);
+
+    expect(actual).toBeTruthy();
   });
 });

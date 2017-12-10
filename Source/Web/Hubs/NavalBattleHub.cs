@@ -19,13 +19,20 @@ namespace Web.Hubs
 
         public List<Boat> GetBoatsOfPlayer()
         {
-            return games.GetGameOfIdPlayer(Context.ConnectionId).GetPlayer(Context.ConnectionId).Boats;
+            return games.GetPlayer(Context.ConnectionId).Boats;
         }
 
         public override Task OnConnectedAsync()
         {
             NavalBattleGame game = games.AddPlayer(Context.ConnectionId);
             Clients.Client(Context.ConnectionId).InvokeAsync("onAssignGame", game);
+
+            if(game.AllPlayersOnline){
+                game.Players.ToList().ForEach(player => {
+                    Clients.Client(player.Id).InvokeAsync("onGameFull", game);
+                });
+            }
+
             return base.OnConnectedAsync();
         }
     }

@@ -1,8 +1,13 @@
 <div class="container-fluid">
   <div *ngIf="gameObservable | async as game; else loading" class="row">
-    <app-own-board [game]="game" class="col-sm-4">
+    <app-own-board [game]="game" class="col-sm-5">
     </app-own-board>
+    <div class="col-sm-2">
+
+    </div>
+    <app-opposing-board *ngIf="game.allPlayersOnline; else waitingForPlayer" [game]="game" class="col-sm-5">
+    </app-opposing-board>
   </div>
   <ng-template #loading>Buscando juego</ng-template>
-
+  <ng-template #waitingForPlayer>Esperando el segundo jugador</ng-template>
 </div>

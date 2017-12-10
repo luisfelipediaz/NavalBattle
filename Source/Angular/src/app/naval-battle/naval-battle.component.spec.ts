@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavalBattleComponent } from './naval-battle.component';
 import { NavalBattleService } from '../services/naval-battle.service';
 import { OwnBoardComponent } from '../own-board/own-board.component';
+import { OpposingBoardComponent } from '../opposing-board/opposing-board.component';
 
 describe('NavalBattleComponent', () => {
   let component: NavalBattleComponent;
@@ -11,7 +12,7 @@ describe('NavalBattleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NavalBattleComponent, OwnBoardComponent],
+      declarations: [NavalBattleComponent, OwnBoardComponent, OpposingBoardComponent],
       providers: [NavalBattleService]
     })
       .compileComponents();

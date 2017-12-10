@@ -8,21 +8,25 @@ namespace Core.Entities
 {
     public class Boat
     {
-        public Dictionary<Point, Boolean> PointsMarked { get; set; }
+        public List<PointBoat> Points { get; set; }
 
-        public int Size { get; }
+        public Direction Direction { get; set; }
 
         public Boat(Point initialPoint, int size, Direction direction)
         {
-            PointsMarked = Position.InitPointsNotMarked(initialPoint, size, direction);
-            Size = PointsMarked.Count;
+            Points = Position.InitPointsNotMarked(initialPoint, size, direction);
+            Direction = direction;
         }
 
         public bool HitMarker(Point move)
         {
             if (TruncatePoint(move))
             {
-                PointsMarked[move] = true;
+                Points.ForEach(position => {
+                    if(position.Equals(move)){
+                        position.Beaten = true;
+                    }
+                });
                 return true;
             }
 
@@ -31,17 +35,20 @@ namespace Core.Entities
 
         public bool ItsAlive()
         {
-            return PointsMarked.ContainsValue(false);
+            return Points.Exists(point => !point.Beaten);
         }
 
-        bool TruncatePoint(Point point)
+        bool TruncatePoint(Point compare)
         {
-            return PointsMarked.ContainsKey(point);
+            return Points
+                .Exists(position => position.Equals(compare));
         }
 
         public static bool TwoBoatsTruncate(Boat boat1, Boat boat2)
         {
-            return boat1.PointsMarked.Any(point1 => boat2.TruncatePoint(point1.Key));
+            return boat1.Points
+                        .Any(point1 =>
+                             boat2.TruncatePoint(new Point(point1.X, point1.Y)));
         }
     }
 }

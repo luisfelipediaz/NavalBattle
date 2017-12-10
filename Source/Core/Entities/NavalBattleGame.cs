@@ -10,6 +10,7 @@ namespace Core.Entities
         public string Id { get; }
         public int SizeInX { get; }
         public int SizeInY { get; }
+        public bool AllPlayersOnline { get; set; }
         public Player Winner { get; set; }
         public Player[] Players { get; set; }
 
@@ -19,6 +20,7 @@ namespace Core.Entities
             SizeInX = Constants.MAX_X + 1;
             SizeInY = Constants.MAX_Y + 1;
             Players = new Player[2];
+            AllPlayersOnline = false;
         }
 
         public Player GetPlayer(string idPlayer)
@@ -39,11 +41,18 @@ namespace Core.Entities
         public void AddPlayer(Player player)
         {
             if (Players[0] is null)
+            {
                 Players[0] = player;
+            }
             else if (Players[1] is null)
+            {
                 Players[1] = player;
+                AllPlayersOnline = true;
+            }
             else
+            {
                 throw new RankException("This game is full");
+            }
 
             ProcessPlayerBoats(player);
         }

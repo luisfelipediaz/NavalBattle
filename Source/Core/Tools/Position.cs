@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Core.Entities;
 
 namespace Core.Tools
 {
     public static class Position
     {
-        public static Dictionary<Point, Boolean> InitPointsNotMarked(Point initialPoint, int size, Direction direction)
+        public static List<PointBoat> InitPointsNotMarked(Point initialPoint, int size, Direction direction)
         {
-            Dictionary<Point, Boolean> points = new Dictionary<Point, bool>();
+            List<PointBoat> points = new List<PointBoat>();
 
             int minX = initialPoint.X;
             int maxX = initialPoint.X;
@@ -35,7 +36,7 @@ namespace Core.Tools
             {
                 for (int y = minY; y <= maxY; y++)
                 {
-                    points.Add(new Point(x, y), false);
+                    points.Add(new PointBoat(x, y));
                 }
             }
 

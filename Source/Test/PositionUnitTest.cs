@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using Core;
+using Core.Entities;
 using Core.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,7 +14,7 @@ namespace Test
         [TestMethod]
         public void ShouldInitPointsNotMarkedReturnAPositionWith3Points()
         {
-            Dictionary<Point, Boolean> position = Position.InitPointsNotMarked(new Point(1, 2), 3, Core.Direction.North);
+            List<PointBoat> position = Position.InitPointsNotMarked(new Point(1, 2), 3, Core.Direction.North);
 
             Assert.AreEqual(3, position.Count);
         }

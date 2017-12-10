@@ -8,7 +8,6 @@ import { NavalBattleGame, Boat } from '../app.model';
 @Injectable()
 export class NavalBattleService {
 
-  private movesOfRival: Subject<any> = new Subject<any>();
   private startGame: Subject<NavalBattleGame> = new Subject<NavalBattleGame>();
   private boatsOfPlayer: Subject<Boat[]> = new Subject<Boat[]>();
   private hubConnection: HubConnection;
@@ -31,30 +30,24 @@ export class NavalBattleService {
   }
 
   private createHubs() {
-    this.hubConnection.on('Send', (data: any) => {
-      this.movesOfRival.next(data);
-    });
-
     this.hubConnection.on('onAssignGame', (game: NavalBattleGame) => {
       this.startGame.next(game);
     });
 
     this.hubConnection.on('getBoatsOfPlayer', (boats: any) => {
-      debugger;
       this.boatsOfPlayer.next(boats);
+    });
+
+    this.hubConnection.on('onGameFull', (game: NavalBattleGame) => {
+      this.startGame.next(game);
     });
   }
 
-  onMoveRival(): Observable<any> {
-    return this.movesOfRival;
-  }
+  getBoatsOfPlayer(): Observable<Boat[]> {
+    this.hubConnection.invoke('GetBoatsOfPlayer').then((boats: Boat[]) => {
+      this.boatsOfPlayer.next(boats);
+    });
 
-  sendMove(data: string): void {
-    this.hubConnection.invoke('Send', data);
-  }
-
-  getBoatsOfPlayer() {
-    this.hubConnection.invoke('GetBoatsOfPlayer').then((...args) => { debugger; });
-
+    return this.boatsOfPlayer;
   }
 }

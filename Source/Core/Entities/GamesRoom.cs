@@ -6,7 +6,7 @@ namespace Core.Entities
 {
     public class GamesRoom
     {
-        List<NavalBattleGame> Games;
+        readonly List<NavalBattleGame> Games;
 
         public GamesRoom()
         {
@@ -30,9 +30,11 @@ namespace Core.Entities
             return groupAlone;
         }
 
-        public NavalBattleGame GetGameOfIdPlayer(string IdPlayer)
+        public Player GetPlayer(string IdPlayer)
         {
-            return Games.FirstOrDefault(game => game.ExistIdPlayerInGame(IdPlayer));
+            return Games
+                .FirstOrDefault(game => game.ExistIdPlayerInGame(IdPlayer))
+                .GetPlayer(IdPlayer);
         }
     }
 }
