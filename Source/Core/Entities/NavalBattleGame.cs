@@ -62,6 +62,21 @@ namespace Core.Entities
             return Players.Any(player => player is null);
         }
 
+        public Player GetOpponent(string IdCurrentPlayer)
+        {
+            return Players.First(player => !player.Id.Equals(IdCurrentPlayer));
+        }
+
+        public Boolean SendMoveToPlayer(Player playerFrom, Player playerTo, PointBoat move) {
+            if(playerTo.HitMarket(new Point(move.X, move.Y))) {
+                move.Beaten = true;
+            }
+
+            playerFrom.Moves.Add(move);
+
+            return move.Beaten;
+        }
+
         void ProcessPlayerBoats(Player player)
         {
             AddRandomBoat(player, 2);

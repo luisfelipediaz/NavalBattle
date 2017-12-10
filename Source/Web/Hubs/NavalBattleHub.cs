@@ -13,9 +13,13 @@ namespace Web.Hubs
     {
         public static GamesRoom games = new GamesRoom();
 
-        public Task Send(string data)
+        public override Task OnConnectedAsync()
         {
-            return Clients.All.InvokeAsync("Send", data);
+            NavalBattleGame game = games.AddPlayer(Context.ConnectionId);
+            Clients.Client(Context.ConnectionId).InvokeAsync("onAssignGame", game);
+            ProcessGame(game);
+
+            return base.OnConnectedAsync();
         }
 
         public List<Boat> GetBoatsOfPlayer()
@@ -26,19 +30,14 @@ namespace Web.Hubs
         public void SendMove(int x, int y)
         {
             NavalBattleGame game = games.GetGameOfPlayer(Context.ConnectionId);
-            Player otherPlayer = game.Players.First(player => !player.Id.Equals(Context.ConnectionId));
-
             Player actualPlayer = game.GetPlayer(Context.ConnectionId);
+            Player otherPlayer = game.GetOpponent(Context.ConnectionId);
+
             PointBoat move = new PointBoat(x, y);
 
-            if (otherPlayer.HitMarket(new Point(x, y)))
+            if (game.SendMoveToPlayer(actualPlayer, otherPlayer, move) is false)
             {
-                move.Beaten = true;
-            }
-            else
-            {
-                Clients.Client(otherPlayer.Id).InvokeAsync("changeTurn", true);
-                Clients.Client(Context.ConnectionId).InvokeAsync("changeTurn", false);
+                ChangeTurn(otherPlayer);
             }
 
             actualPlayer.Moves.Add(move);
@@ -46,26 +45,37 @@ namespace Web.Hubs
             Clients.Client(otherPlayer.Id).InvokeAsync("onOppositeMovesChange", actualPlayer.Moves);
         }
 
-        public override Task OnConnectedAsync()
+        void ChangeTurn(Player otherPlayer)
         {
-            NavalBattleGame game = games.AddPlayer(Context.ConnectionId);
-            Clients.Client(Context.ConnectionId).InvokeAsync("onAssignGame", game);
+            InvokeChangeTurn(otherPlayer.Id, true);
+            InvokeChangeTurn(Context.ConnectionId, false);
+        }
 
+
+
+        void ProcessGame(NavalBattleGame game)
+        {
             if (game.AllPlayersOnline)
             {
-                game.Players.ToList().ForEach(player =>
-                {
-                    Clients.Client(player.Id).InvokeAsync("onGameFull", game);
-                });
+                NotifyGameFull(game);
 
-                Clients.Client(game.Players.First().Id)
-                       .InvokeAsync("changeTurn", true);
-
-                Clients.Client(game.Players.Last().Id)
-                       .InvokeAsync("changeTurn", false);
+                InvokeChangeTurn(game.Players.First().Id, true);
+                InvokeChangeTurn(game.Players.Last().Id, false);
             }
+        }
 
-            return base.OnConnectedAsync();
+        void NotifyGameFull(NavalBattleGame game)
+        {
+            game.Players.ToList().ForEach(player =>
+            {
+                Clients.Client(player.Id).InvokeAsync("onGameFull", game);
+            });
+        }
+
+        void InvokeChangeTurn(string IdPlayer, bool itsTurn)
+        {
+            Clients.Client(IdPlayer)
+                   .InvokeAsync("changeTurn", itsTurn);
         }
     }
 }

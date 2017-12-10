@@ -16,10 +16,6 @@ export class NavalBattleService {
 
   private hubConnection: HubConnection;
 
-  constructor() {
-
-  }
-
   public initGame(): Observable<NavalBattleGame> {
     this.hubConnection = new HubConnection(environment.urlNavalSignalR);
     this.createHubs();
@@ -50,7 +46,6 @@ export class NavalBattleService {
   public sendMove(x: number, y: number): void {
     this.hubConnection.send('SendMove', x, y);
   }
-
 
   private startSignalR() {
     this.hubConnection.start()
