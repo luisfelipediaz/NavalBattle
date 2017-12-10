@@ -40,7 +40,6 @@ namespace Web.Hubs
                 ChangeTurn(otherPlayer);
             }
 
-            actualPlayer.Moves.Add(move);
             Clients.Client(actualPlayer.Id).InvokeAsync("onMyMovesChange", actualPlayer.Moves);
             Clients.Client(otherPlayer.Id).InvokeAsync("onOppositeMovesChange", actualPlayer.Moves);
         }
