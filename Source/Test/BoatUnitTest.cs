@@ -26,7 +26,7 @@ namespace Test
         public void ShouldHitMarkerReturnTrueWhenHitMarkerAssert()
         {
             Boat boat = new Boat(new Point(1, 2), 3, Core.Direction.North);
-            Boolean beaten = boat.HitMarker(new Point(1, 3));
+            bool beaten = boat.HitMarker(new Point(1, 3));
             Assert.IsTrue(beaten);
         }
 
@@ -34,7 +34,7 @@ namespace Test
         public void ShouldHitMarkerReturnFalseWhenHitMarkerNoAssert()
         {
             Boat boat = new Boat(new Point(1, 2), 3, Core.Direction.North);
-            Boolean beaten = boat.HitMarker(new Point(4, 2));
+            bool beaten = boat.HitMarker(new Point(4, 2));
             Assert.IsFalse(beaten);
         }
 
