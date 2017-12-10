@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, Input, SimpleChanges, OnInit } from '@angular/core';
 import { NavalBattleGame, Boat, Point, PointInBoat, Direction } from '../app.model';
 import { NavalBattleService } from '../services/naval-battle.service';
 
@@ -7,7 +7,7 @@ import { NavalBattleService } from '../services/naval-battle.service';
   templateUrl: './own-board.component.html',
   styleUrls: ['./own-board.component.scss']
 })
-export class OwnBoardComponent implements OnChanges {
+export class OwnBoardComponent implements OnInit {
 
   @Input() game: NavalBattleGame;
 
@@ -17,18 +17,16 @@ export class OwnBoardComponent implements OnChanges {
 
   constructor(private navalBattleService: NavalBattleService) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!!this.game) {
-      this.navalBattleService.getBoatsOfPlayer().subscribe(
-        (boats: Boat[]) => this.boats = boats
-      );
+  ngOnInit(): void {
+    this.navalBattleService.getBoatsOfPlayer().subscribe(
+      (boats: Boat[]) => this.boats = boats
+    );
 
-      this.navalBattleService.getOppositeMoves().subscribe((moves: Point[]) => {
-        this.moves = moves;
-      });
-    }
+    this.navalBattleService.getOppositeMoves().subscribe(
+      (moves: Point[]) => this.moves = moves
+    );
   }
-  
+
   isHitABoat(x: number, y: number): boolean {
     return this.moves.some((move: { x: number, y: number }) => {
       return move.x === x && move.y === y;
