@@ -2,10 +2,13 @@ td.game-space {
     transition: 0.3s all;
     background: blue;
     opacity: 0.3;
+}
+
+td.game-space.my-turn{
     cursor: pointer;
 }
 
-td.game-space:hover{
+td.game-space.my-turn:hover{
     transition: 0.3s all;
     opacity: 1;
     background: lightblue;
