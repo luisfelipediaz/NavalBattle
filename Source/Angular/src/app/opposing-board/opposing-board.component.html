@@ -1,7 +1,7 @@
 <app-board [game]="game">
   <ng-template let-indexX="indexX" let-indexY="indexY">
     <div class="content game-space" [class.my-turn]="myTurn" [class.hit-cell]="isCellBeaten(indexX, indexY)" [class.not-hit-cell]="isNotHitCell(indexX, indexY)"
-      (click)="sendMove(indexX, indexY)">
+      (click)="myTurn && sendMove(indexX, indexY)">
     </div>
   </ng-template>
 </app-board>
