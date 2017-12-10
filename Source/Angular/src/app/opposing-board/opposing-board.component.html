@@ -1,4 +1,4 @@
-<table *ngIf="game" border="1">
+<table *ngIf="game" border="1" >
   <tr *ngFor="let indexY of counter(game.sizeInY);">
     <td [style.width]="((100/(game.sizeInX + 1)) + '%')">
       <div class="content">
@@ -7,6 +7,7 @@
     </td>
     <td *ngFor="let num of counter(game.sizeInX); index as indexX"
       class="game-space"
+      [class.my-turn]="myTurn"
       [style.width]="((100/(game.sizeInX + 1)) + '%')">
       <div class="content">
       </div>

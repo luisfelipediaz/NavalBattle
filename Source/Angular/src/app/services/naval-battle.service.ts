@@ -9,6 +9,7 @@ import { NavalBattleGame, Boat } from '../app.model';
 export class NavalBattleService {
 
   private startGame: Subject<NavalBattleGame> = new Subject<NavalBattleGame>();
+  private turns: Subject<boolean> = new Subject<boolean>();
   private boatsOfPlayer: Subject<Boat[]> = new Subject<Boat[]>();
   private hubConnection: HubConnection;
 
@@ -21,6 +22,18 @@ export class NavalBattleService {
     this.createHubs();
     this.startSignalR();
     return this.startGame;
+  }
+
+  public getBoatsOfPlayer(): Observable<Boat[]> {
+    this.hubConnection.invoke('GetBoatsOfPlayer').then((boats: Boat[]) => {
+      this.boatsOfPlayer.next(boats);
+    });
+
+    return this.boatsOfPlayer;
+  }
+
+  public getMyTurn(): Observable<boolean> {
+    return this.turns;
   }
 
   private startSignalR() {
@@ -41,13 +54,11 @@ export class NavalBattleService {
     this.hubConnection.on('onGameFull', (game: NavalBattleGame) => {
       this.startGame.next(game);
     });
-  }
 
-  getBoatsOfPlayer(): Observable<Boat[]> {
-    this.hubConnection.invoke('GetBoatsOfPlayer').then((boats: Boat[]) => {
-      this.boatsOfPlayer.next(boats);
+    this.hubConnection.on('changeTurn', (itsMyTurn: boolean) => {
+      this.turns.next(itsMyTurn);
     });
-
-    return this.boatsOfPlayer;
   }
+
+  
 }

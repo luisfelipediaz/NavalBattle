@@ -31,6 +31,12 @@ namespace Web.Hubs
                 game.Players.ToList().ForEach(player => {
                     Clients.Client(player.Id).InvokeAsync("onGameFull", game);
                 });
+
+                Clients.Client(game.Players.First().Id)
+                       .InvokeAsync("changeTurn", true);
+
+                Clients.Client(game.Players.Last().Id)
+                       .InvokeAsync("changeTurn", false);
             }
 
             return base.OnConnectedAsync();
