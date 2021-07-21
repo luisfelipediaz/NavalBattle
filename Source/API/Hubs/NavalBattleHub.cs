@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Core.Entities;
-using Core;
-using System.Drawing;
+using Microsoft.AspNetCore.SignalR;
 
-namespace Web.Hubs
+namespace API.Hubs
 {
     public class NavalBattleHub : Hub
     {
@@ -16,7 +13,7 @@ namespace Web.Hubs
         public override Task OnConnectedAsync()
         {
             NavalBattleGame game = games.AddPlayer(Context.ConnectionId);
-            Clients.Client(Context.ConnectionId).InvokeAsync("onAssignGame", game);
+            Clients.Client(Context.ConnectionId).SendAsync("onAssignGame", game);
             ProcessGame(game);
 
             return base.OnConnectedAsync();
@@ -40,8 +37,8 @@ namespace Web.Hubs
                 ChangeTurn(otherPlayer);
             }
 
-            Clients.Client(actualPlayer.Id).InvokeAsync("onMyMovesChange", actualPlayer.Moves);
-            Clients.Client(otherPlayer.Id).InvokeAsync("onOppositeMovesChange", actualPlayer.Moves);
+            Clients.Client(actualPlayer.Id).SendAsync("onMyMovesChange", actualPlayer.Moves);
+            Clients.Client(otherPlayer.Id).SendAsync("onOppositeMovesChange", actualPlayer.Moves);
         }
 
         void ChangeTurn(Player otherPlayer)
@@ -67,14 +64,14 @@ namespace Web.Hubs
         {
             game.Players.ToList().ForEach(player =>
             {
-                Clients.Client(player.Id).InvokeAsync("onGameFull", game);
+                Clients.Client(player.Id).SendAsync("onGameFull", game);
             });
         }
 
         void InvokeChangeTurn(string IdPlayer, bool itsTurn)
         {
             Clients.Client(IdPlayer)
-                   .InvokeAsync("changeTurn", itsTurn);
+                   .SendAsync("changeTurn", itsTurn);
         }
     }
 }

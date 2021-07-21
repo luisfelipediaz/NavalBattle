@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input, SimpleChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NavalBattleGame, Boat, Point, PointInBoat, Direction } from '../app.model';
 import { NavalBattleService } from '../services/naval-battle.service';
 
@@ -8,8 +8,7 @@ import { NavalBattleService } from '../services/naval-battle.service';
   styleUrls: ['./own-board.component.scss']
 })
 export class OwnBoardComponent implements OnInit {
-
-  @Input() game: NavalBattleGame;
+  @Input() game: NavalBattleGame | null = null;
 
   moves: Point[] = [];
 
@@ -36,7 +35,7 @@ export class OwnBoardComponent implements OnInit {
   getClassOfCell(x: number, y: number): string {
     const classOfCell: string[] = [];
 
-    const boatFind: Boat = this.boats.find((boat: Boat) =>
+    const boatFind: Boat | undefined = this.boats.find((boat: Boat) =>
       boat.points.some((point: PointInBoat) => point.x === x && point.y === y)
     );
 

@@ -1,17 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OwnBoardComponent } from './own-board.component';
-import { NavalBattleGame, Boat, Direction } from '../app.model';
+import { Direction } from '../app.model';
 import { NavalBattleService } from '../services/naval-battle.service';
 import { BoardComponent } from '../board/board.component';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('OwnBoardComponent', () => {
   let component: OwnBoardComponent;
   let fixture: ComponentFixture<OwnBoardComponent>;
 
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [
         OwnBoardComponent,
@@ -20,7 +20,7 @@ describe('OwnBoardComponent', () => {
       providers: [NavalBattleService]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OwnBoardComponent);
@@ -36,10 +36,10 @@ describe('OwnBoardComponent', () => {
     const navalBattleService: NavalBattleService = fixture.debugElement.injector.get(NavalBattleService);
 
     spyOn(navalBattleService, 'getBoatsOfPlayer')
-      .and.callFake(() => Observable.of([]));
+      .and.callFake(() => of([]));
 
     spyOn(navalBattleService, 'getOppositeMoves')
-      .and.callFake(() => Observable.of([]));
+      .and.callFake(() => of([]));
 
     fixture.detectChanges();
   });

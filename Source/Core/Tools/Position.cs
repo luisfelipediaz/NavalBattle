@@ -9,7 +9,7 @@ namespace Core.Tools
     {
         public static List<PointBoat> InitPointsNotMarked(Point initialPoint, int size, Direction direction)
         {
-            List<PointBoat> points = new List<PointBoat>();
+            var points = new List<PointBoat>();
 
             int minX = initialPoint.X;
             int maxX = initialPoint.X;

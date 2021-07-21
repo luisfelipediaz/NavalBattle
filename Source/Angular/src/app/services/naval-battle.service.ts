@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { HubConnection } from '@aspnet/signalr-client';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { NavalBattleGame, Boat, PointInBoat } from '../app.model';
 
@@ -16,8 +15,14 @@ export class NavalBattleService {
 
   private hubConnection: HubConnection;
 
+  constructor() {
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(environment.urlNavalSignalR, { withCredentials: true })
+      .withAutomaticReconnect()
+      .build();
+  }
+
   public initGame(): Observable<NavalBattleGame> {
-    this.hubConnection = new HubConnection(environment.urlNavalSignalR);
     this.createHubs();
     this.startSignalR();
     return this.startGame;

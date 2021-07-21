@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavalBattleGame, Point, PointInBoat } from '../app.model';
+import { NavalBattleGame, PointInBoat } from '../app.model';
 import { NavalBattleService } from '../services/naval-battle.service';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-opposing-board',
@@ -9,8 +8,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./opposing-board.component.scss']
 })
 export class OpposingBoardComponent implements OnInit {
-
-  @Input() game: NavalBattleGame;
+  @Input() game: NavalBattleGame | null = null;
 
   myTurn: Boolean = false;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, ContentChild } from '@angular/core';
+import { Component, Input, TemplateRef, ContentChild } from '@angular/core';
 import { NavalBattleGame } from '../app.model';
 
 @Component({
@@ -6,15 +6,9 @@ import { NavalBattleGame } from '../app.model';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent implements OnInit {
-
-  @Input() game: NavalBattleGame;
-  @ContentChild(TemplateRef) itemTemplate: TemplateRef<any>;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class BoardComponent {
+  @Input() game: NavalBattleGame | null = null;
+  @ContentChild(TemplateRef) itemTemplate: TemplateRef<any> |null = null;
 
   public counter(count: number): any[] {
     const arr: number[] = [];

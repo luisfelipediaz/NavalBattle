@@ -1,13 +1,13 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BoardComponent } from './board.component';
 
 describe('BoardComponent', () => {
   let component: BoardComponent;
   let fixture: ComponentFixture<BoardComponent>;
-  let compile;
+  let compile: any;
 
-  beforeEach(async(() => {
+  beforeEach((async () => {
     TestBed.configureTestingModule({
       declarations: [BoardComponent]
     })
@@ -52,10 +52,10 @@ describe('BoardComponent', () => {
   });
 
   it('should bind table with 9 rows, configured in input "game"', () => {
-    expect(compile.querySelectorAll('table tr').length).toEqual(component.game.sizeInY + 1);
+    expect(compile.querySelectorAll('table tr').length).toEqual((component.game?.sizeInY ?? 0) + 1);
   });
 
   it('should bind table with 9 tds per row, configured in input "game"', () => {
-    expect(compile.querySelector('table tr').querySelectorAll('td').length).toEqual(component.game.sizeInY + 1);
+    expect(compile.querySelector('table tr').querySelectorAll('td').length).toEqual((component.game?.sizeInY ?? 0) + 1);
   });
 });
